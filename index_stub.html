@@ -1,0 +1,30 @@
+<html>
+
+<head>
+    <title>Index of /{{ path }}</title>
+</head>
+
+<body>
+    <h1>Index of /{{ path }}</h1>
+    <ul>
+        {% if not ishome %}
+        <li><a href="../index.html">..</a></li>
+        {% endif %}
+        {% for directory in directories %}
+        <li>
+            <a href="{{ directory[0] }}/index.html">{{ directory[0] }}/</a>,
+            size={{ directory[1] }}, mtime={{ directory[2] }}
+        </li>
+        {% endfor %}
+    </ul>
+    <ul>
+        {% for file in files %}
+        <li>
+            <a href="{{ file[0] }}">{{ file[0] }}</a>,
+            size={{ file[1] }}, mtime={{ file[2] }}
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+
+</html>
