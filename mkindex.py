@@ -32,7 +32,8 @@ def generate_index(
     base: str,
     directory: str,
     env: Environment,
-    recursive: bool,
+    charset: str = 'UTF-8',
+    recursive: bool = False,
     verbose: bool = False,
     ishome: bool = True,
 ):
@@ -54,7 +55,7 @@ def generate_index(
             directories.append(data)
             if recursive:
                 generate_index(
-                    base, path_join(directory, item), env, True, verbose, False
+                    base, path_join(directory, item), env, charset, True, verbose, False
                 )
     tmpl = env.get_template('index_stub.html')
     if verbose:
@@ -66,6 +67,7 @@ def generate_index(
                 files=files,
                 directories=directories,
                 ishome=ishome,
+                charset=charset,
             )
         )
 
@@ -91,9 +93,14 @@ if __name__ == '__main__':
         action='store_true',
         help='Show what is being done',
     )
+    ap.add_argument(
+        '--charset',
+        default='UTF-8',
+        help='The <meta charset> tag in the generated HTML (default: UTF-8)',
+    )
     args = ap.parse_args()
     env = Environment(
         loader=FileSystemLoader(realpath(dirname(__file__))),
         autoescape=select_autoescape(),
     )
-    generate_index(args.directory, '', env, args.recursive, args.verbose)
+    generate_index(args.directory, '', env, args.charset, args.recursive, args.verbose)
