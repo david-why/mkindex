@@ -47,6 +47,8 @@ def generate_index(
         mtime = s.st_mtime
         data = (item, size, time.ctime(mtime))
         if isfile(path):
+            if item == 'index.html':
+                continue
             files.append(data)
         else:
             directories.append(data)
