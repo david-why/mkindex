@@ -53,7 +53,9 @@ def generate_index(
         else:
             directories.append(data)
             if recursive:
-                generate_index(base, path_join(directory, item), env, True, False)
+                generate_index(
+                    base, path_join(directory, item), env, True, verbose, False
+                )
     tmpl = env.get_template('index_stub.html')
     if verbose:
         print(f'Writing {path_join(realdir, "index.html")}')
