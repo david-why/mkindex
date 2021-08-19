@@ -1,7 +1,7 @@
 import argparse
 import time
 from os import listdir, stat
-from os.path import isdir, isfile
+from os.path import isdir, isfile, realpath, dirname
 from os.path import join as path_join
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
@@ -89,5 +89,8 @@ if __name__ == '__main__':
         help='Show what is being done',
     )
     args = ap.parse_args()
-    env = Environment(loader=FileSystemLoader('.'), autoescape=select_autoescape())
+    env = Environment(
+        loader=FileSystemLoader(realpath(dirname(__file__))),
+        autoescape=select_autoescape(),
+    )
     generate_index(args.directory, '', env, args.recursive, args.verbose)
